@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Measures.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Measures" Namespace="Org.OData.Measures.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Aggregation.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Aggregation" Namespace="Org.OData.Aggregation.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/462030211/Analytics.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Analytics" Namespace="com.sap.vocabularies.Analytics.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470974/Common.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470971/Communication.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="Communication" Namespace="com.sap.vocabularies.Communication.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices m:DataServiceVersion="2.0">
+    <Schema Namespace="ControlService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+        <EntitySet Name="Owners" EntityType="ControlService.Owners"/>
+        <EntitySet Name="Controls" EntityType="ControlService.Controls"/>
+        <EntitySet Name="texts" EntityType="ControlService.texts"/>
+        <EntitySet Name="sap_common_Countries" EntityType="ControlService.sap_common_Countries"/>
+        <AssociationSet Name="Owners_control" Association="ControlService.Owners_control">
+          <End Role="Owners" EntitySet="Owners"/>
+          <End Role="Controls" EntitySet="Controls"/>
+        </AssociationSet>
+        <AssociationSet Name="Controls_country" Association="ControlService.Controls_country">
+          <End Role="Controls" EntitySet="Controls"/>
+          <End Role="sap_common_Countries" EntitySet="sap_common_Countries"/>
+        </AssociationSet>
+        <AssociationSet Name="texts_control" Association="ControlService.texts_control">
+          <End Role="texts" EntitySet="texts"/>
+          <End Role="Controls" EntitySet="Controls"/>
+        </AssociationSet>
+      </EntityContainer>
+      <EntityType Name="Owners">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <NavigationProperty Name="control" Relationship="ControlService.Owners_control" FromRole="Owners" ToRole="Controls"/>
+        <Property Name="ownerName" Type="Edm.String"/>
+        <Property Name="ownerEmail" Type="Edm.String"/>
+        <Property Name="control_ID" Type="Edm.Int32"/>
+      </EntityType>
+      <EntityType Name="Controls">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="controlName" Type="Edm.String"/>
+        <Property Name="controlDesc" Type="Edm.String"/>
+        <NavigationProperty Name="country" Relationship="ControlService.Controls_country" FromRole="Controls" ToRole="sap_common_Countries"/>
+        <Property Name="controlGroup" Type="Edm.String"/>
+        <Property Name="validFrom" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="validTo" Type="Edm.DateTime" sap:display-format="Date"/>
+        <Property Name="cdf1" Type="Edm.String"/>
+        <Property Name="cdf2" Type="Edm.String"/>
+        <Property Name="cdf3" Type="Edm.String"/>
+        <Property Name="cdf4" Type="Edm.String"/>
+        <Property Name="cdf5" Type="Edm.String"/>
+        <Property Name="cdf6" Type="Edm.String"/>
+        <Property Name="cdf7" Type="Edm.String"/>
+        <Property Name="cdf8" Type="Edm.String"/>
+        <Property Name="cdf9" Type="Edm.String"/>
+        <Property Name="cdf10" Type="Edm.String"/>
+        <NavigationProperty Name="controlOwners" Relationship="ControlService.Owners_control" FromRole="Controls" ToRole="Owners"/>
+        <NavigationProperty Name="localized" Relationship="ControlService.texts_control" FromRole="Controls" ToRole="texts"/>
+        <Property Name="country_code" Type="Edm.String" MaxLength="3"/>
+      </EntityType>
+      <EntityType Name="texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="control_ID"/>
+        </Key>
+        <NavigationProperty Name="control" Relationship="ControlService.texts_control" FromRole="texts" ToRole="Controls"/>
+        <Property Name="locale" Type="Edm.String" MaxLength="2" Nullable="false"/>
+        <Property Name="controlName" Type="Edm.String"/>
+        <Property Name="controlDesc" Type="Edm.String"/>
+        <Property Name="control_ID" Type="Edm.Int32" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="sap_common_Countries">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <Association Name="Owners_control">
+        <End Role="Owners" Type="ControlService.Owners" Multiplicity="*"/>
+        <End Role="Controls" Type="ControlService.Controls" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Controls">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="Owners">
+            <PropertyRef Name="control_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="Controls_country">
+        <End Role="Controls" Type="ControlService.Controls" Multiplicity="*"/>
+        <End Role="sap_common_Countries" Type="ControlService.sap_common_Countries" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="sap_common_Countries">
+            <PropertyRef Name="code"/>
+          </Principal>
+          <Dependent Role="Controls">
+            <PropertyRef Name="country_code"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Association Name="texts_control">
+        <End Role="texts" Type="ControlService.texts" Multiplicity="*"/>
+        <End Role="Controls" Type="ControlService.Controls" Multiplicity="0..1"/>
+        <ReferentialConstraint>
+          <Principal Role="Controls">
+            <PropertyRef Name="ID"/>
+          </Principal>
+          <Dependent Role="texts">
+            <PropertyRef Name="control_ID"/>
+          </Dependent>
+        </ReferentialConstraint>
+      </Association>
+      <Annotations Target="ControlService.Owners" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+      <Annotations Target="ControlService.EntityContainer/Owners" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="ControlService.Controls" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+      <Annotations Target="ControlService.EntityContainer/Controls" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="ControlService.Controls/country" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Ländercode"/>
+            <PropertyValue Property="CollectionPath" String="sap_common_Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="country_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.Label" String="Ländercode"/>
+      </Annotations>
+      <Annotations Target="ControlService.Controls/country_code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Ländercode"/>
+            <PropertyValue Property="CollectionPath" String="sap_common_Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="country_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.Label" String="Ländercode"/>
+      </Annotations>
+      <Annotations Target="ControlService.texts" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+      <Annotations Target="ControlService.EntityContainer/texts" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="ControlService.sap_common_Countries/code" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="Ländercode"/>
+            <PropertyValue Property="CollectionPath" String="sap_common_Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Common.Label" String="Ländercode"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,1065 @@
+{
+  "definitions": {
+    "ControlService": {
+      "kind": "service",
+      "@source": "srv/my-service.cds"
+    },
+    "ControlService.Owners": {
+      "kind": "entity",
+      "@readonly": true,
+      "source": "com.sap.grc.ctrl.ControlOwners",
+      "elements": {
+        "ID": {
+          "origin": "com.sap.grc.ctrl.ControlOwners..ID",
+          "indexNo": 1,
+          "value": {
+            "=": "ControlOwners.ID"
+          },
+          "key": true,
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ID"
+        },
+        "control": {
+          "origin": "com.sap.grc.ctrl.ControlOwners..control",
+          "indexNo": 2,
+          "value": {
+            "=": "ControlOwners.control"
+          },
+          "type": "cds.Association",
+          "target": "ControlService.Controls",
+          "foreignKeys": {
+            "ID": {
+              "origin": "com.sap.grc.ctrl.ControlOwners..control.ID",
+              "indexNo": 1,
+              "path": "ID",
+              "generatedFieldName": "control_ID",
+              "@cds.persistence.name": "ID"
+            }
+          },
+          "redirected": true,
+          "@cds.persistence.name": "CONTROL"
+        },
+        "ownerName": {
+          "origin": "com.sap.grc.ctrl.ControlOwners..ownerName",
+          "indexNo": 3,
+          "value": {
+            "=": "ControlOwners.ownerName"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "OWNERNAME"
+        },
+        "ownerEmail": {
+          "origin": "com.sap.grc.ctrl.ControlOwners..ownerEmail",
+          "indexNo": 4,
+          "value": {
+            "=": "ControlOwners.ownerEmail"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "OWNEREMAIL"
+        },
+        "control_ID": {
+          "type": "cds.Integer",
+          "value": {
+            "=": "ControlOwners.control_ID"
+          },
+          "origin": "com.sap.grc.ctrl.ControlOwners..control_ID",
+          "@odata.foreignKey4": "control",
+          "@cds.persistence.name": "CONTROL_ID"
+        }
+      },
+      "@Capabilities.DeleteRestrictions.Deletable": false,
+      "@Capabilities.InsertRestrictions.Insertable": false,
+      "@Capabilities.UpdateRestrictions.Updatable": false,
+      "@cds.persistence.name": "CONTROLSERVICE_OWNERS"
+    },
+    "ControlService.Controls": {
+      "kind": "entity",
+      "@readonly": true,
+      "source": "com.sap.grc.ctrl.Controls",
+      "elements": {
+        "ID": {
+          "origin": "com.sap.grc.ctrl.Controls..ID",
+          "indexNo": 1,
+          "value": {
+            "=": "Controls.ID"
+          },
+          "key": true,
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ID"
+        },
+        "controlName": {
+          "origin": "com.sap.grc.ctrl.Controls..controlName",
+          "indexNo": 2,
+          "value": {
+            "=": "Controls.controlName"
+          },
+          "localized": true,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLNAME"
+        },
+        "controlDesc": {
+          "origin": "com.sap.grc.ctrl.Controls..controlDesc",
+          "indexNo": 3,
+          "value": {
+            "=": "Controls.controlDesc"
+          },
+          "localized": true,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLDESC"
+        },
+        "country": {
+          "origin": "com.sap.grc.ctrl.Controls..country",
+          "indexNo": 4,
+          "value": {
+            "=": "Controls.country"
+          },
+          "type": "cds.Association",
+          "target": "ControlService.sap_common_Countries",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@description": "{i18n>countryCodeDescription}",
+          "foreignKeys": {
+            "code": {
+              "path": "code",
+              "indexNo": 1,
+              "generatedFieldName": "country_code",
+              "@cds.persistence.name": "CODE"
+            }
+          },
+          "@Common.Label": "{i18n>countryCode}",
+          "redirected": true,
+          "@cds.persistence.name": "COUNTRY"
+        },
+        "controlGroup": {
+          "origin": "com.sap.grc.ctrl.Controls..controlGroup",
+          "indexNo": 5,
+          "value": {
+            "=": "Controls.controlGroup"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLGROUP"
+        },
+        "validFrom": {
+          "origin": "com.sap.grc.ctrl.Controls..validFrom",
+          "indexNo": 6,
+          "value": {
+            "=": "Controls.validFrom"
+          },
+          "type": "cds.Date",
+          "@cds.persistence.name": "VALIDFROM"
+        },
+        "validTo": {
+          "origin": "com.sap.grc.ctrl.Controls..validTo",
+          "indexNo": 7,
+          "value": {
+            "=": "Controls.validTo"
+          },
+          "type": "cds.Date",
+          "@cds.persistence.name": "VALIDTO"
+        },
+        "cdf1": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf1",
+          "indexNo": 8,
+          "value": {
+            "=": "Controls.cdf1"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF1"
+        },
+        "cdf2": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf2",
+          "indexNo": 9,
+          "value": {
+            "=": "Controls.cdf2"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF2"
+        },
+        "cdf3": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf3",
+          "indexNo": 10,
+          "value": {
+            "=": "Controls.cdf3"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF3"
+        },
+        "cdf4": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf4",
+          "indexNo": 11,
+          "value": {
+            "=": "Controls.cdf4"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF4"
+        },
+        "cdf5": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf5",
+          "indexNo": 12,
+          "value": {
+            "=": "Controls.cdf5"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF5"
+        },
+        "cdf6": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf6",
+          "indexNo": 13,
+          "value": {
+            "=": "Controls.cdf6"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF6"
+        },
+        "cdf7": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf7",
+          "indexNo": 14,
+          "value": {
+            "=": "Controls.cdf7"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF7"
+        },
+        "cdf8": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf8",
+          "indexNo": 15,
+          "value": {
+            "=": "Controls.cdf8"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF8"
+        },
+        "cdf9": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf9",
+          "indexNo": 16,
+          "value": {
+            "=": "Controls.cdf9"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF9"
+        },
+        "cdf10": {
+          "origin": "com.sap.grc.ctrl.Controls..cdf10",
+          "indexNo": 17,
+          "value": {
+            "=": "Controls.cdf10"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF10"
+        },
+        "controlOwners": {
+          "origin": "com.sap.grc.ctrl.Controls..controlOwners",
+          "indexNo": 18,
+          "value": {
+            "=": "Controls.controlOwners"
+          },
+          "type": "cds.Association",
+          "target": "ControlService.Owners",
+          "cardinality": {
+            "targetMax": "*"
+          },
+          "onCond": {
+            "op": "=",
+            "args": [
+              {
+                "=": "controlOwners.control"
+              },
+              {
+                "=": "$self"
+              }
+            ]
+          },
+          "on": "controlOwners.control = $self",
+          "redirected": true,
+          "@cds.persistence.name": "CONTROLOWNERS"
+        },
+        "localized": {
+          "origin": "com.sap.grc.ctrl.Controls..localized",
+          "indexNo": 19,
+          "value": {
+            "=": "Controls.localized"
+          },
+          "type": "cds.Association",
+          "target": "ControlService.texts",
+          "onCond": {
+            "op": "and",
+            "args": [
+              {
+                "op": "=",
+                "args": [
+                  {
+                    "=": "localized.locale"
+                  },
+                  {
+                    "op": "call",
+                    "args": [
+                      "locale"
+                    ],
+                    "func": "session_context"
+                  }
+                ]
+              },
+              {
+                "op": "=",
+                "args": [
+                  {
+                    "=": "localized.control"
+                  },
+                  {
+                    "=": "$self"
+                  }
+                ]
+              }
+            ]
+          },
+          "on": "localized.locale = session_context('locale')\n  and localized.control = $self",
+          "redirected": true,
+          "@cds.persistence.name": "LOCALIZED"
+        },
+        "country_code": {
+          "type": "cds.String",
+          "length": 3,
+          "value": {
+            "=": "Controls.country_code"
+          },
+          "origin": "com.sap.grc.ctrl.Controls..country_code",
+          "@odata.foreignKey4": "country",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@title": "{i18n>countryCode}",
+          "@description": "{i18n>countryCodeDescription}",
+          "@Common.Label": "{i18n>countryCode}",
+          "@cds.persistence.name": "COUNTRY_CODE"
+        }
+      },
+      "@Capabilities.DeleteRestrictions.Deletable": false,
+      "@Capabilities.InsertRestrictions.Insertable": false,
+      "@Capabilities.UpdateRestrictions.Updatable": false,
+      "@cds.persistence.name": "CONTROLSERVICE_CONTROLS"
+    },
+    "ControlService.texts": {
+      "kind": "entity",
+      "@readonly": true,
+      "source": "com.sap.grc.ctrl.Controls_texts",
+      "elements": {
+        "control": {
+          "origin": "com.sap.grc.ctrl.Controls_texts..control",
+          "indexNo": 1,
+          "value": {
+            "=": "Controls_texts.control"
+          },
+          "key": true,
+          "type": "cds.Association",
+          "target": "ControlService.Controls",
+          "foreignKeys": {
+            "ID": {
+              "origin": "com.sap.grc.ctrl.Controls_texts..control.ID",
+              "indexNo": 1,
+              "path": "ID",
+              "generatedFieldName": "control_ID",
+              "@cds.persistence.name": "ID"
+            }
+          },
+          "redirected": true,
+          "@cds.persistence.name": "CONTROL"
+        },
+        "locale": {
+          "origin": "com.sap.grc.ctrl.Controls_texts..locale",
+          "indexNo": 2,
+          "value": {
+            "=": "Controls_texts.locale"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "LOCALE"
+        },
+        "controlName": {
+          "origin": "com.sap.grc.ctrl.Controls_texts..controlName",
+          "indexNo": 3,
+          "value": {
+            "=": "Controls_texts.controlName"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLNAME"
+        },
+        "controlDesc": {
+          "origin": "com.sap.grc.ctrl.Controls_texts..controlDesc",
+          "indexNo": 4,
+          "value": {
+            "=": "Controls_texts.controlDesc"
+          },
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLDESC"
+        },
+        "control_ID": {
+          "type": "cds.Integer",
+          "key": true,
+          "value": {
+            "=": "Controls_texts.control_ID"
+          },
+          "origin": "com.sap.grc.ctrl.Controls_texts..control_ID",
+          "@odata.foreignKey4": "control",
+          "@cds.persistence.name": "CONTROL_ID"
+        }
+      },
+      "@Capabilities.DeleteRestrictions.Deletable": false,
+      "@Capabilities.InsertRestrictions.Insertable": false,
+      "@Capabilities.UpdateRestrictions.Updatable": false,
+      "@cds.persistence.name": "CONTROLSERVICE_TEXTS"
+    },
+    "com.sap.grc.ctrl.Controls": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ID"
+        },
+        "controlName": {
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLNAME"
+        },
+        "controlDesc": {
+          "indexNo": 3,
+          "localized": true,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLDESC"
+        },
+        "country": {
+          "indexNo": 4,
+          "type": "cds.Association",
+          "target": "sap.common.Countries",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@description": "{i18n>countryCodeDescription}",
+          "foreignKeys": {
+            "code": {
+              "path": "code",
+              "indexNo": 1,
+              "generatedFieldName": "country_code",
+              "@cds.persistence.name": "CODE"
+            }
+          },
+          "@Common.Label": "{i18n>countryCode}",
+          "@cds.persistence.name": "COUNTRY"
+        },
+        "controlGroup": {
+          "indexNo": 5,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLGROUP"
+        },
+        "validFrom": {
+          "indexNo": 6,
+          "type": "cds.Date",
+          "@cds.persistence.name": "VALIDFROM"
+        },
+        "validTo": {
+          "indexNo": 7,
+          "type": "cds.Date",
+          "@cds.persistence.name": "VALIDTO"
+        },
+        "cdf1": {
+          "indexNo": 8,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF1"
+        },
+        "cdf2": {
+          "indexNo": 9,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF2"
+        },
+        "cdf3": {
+          "indexNo": 10,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF3"
+        },
+        "cdf4": {
+          "indexNo": 11,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF4"
+        },
+        "cdf5": {
+          "indexNo": 12,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF5"
+        },
+        "cdf6": {
+          "indexNo": 13,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF6"
+        },
+        "cdf7": {
+          "indexNo": 14,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF7"
+        },
+        "cdf8": {
+          "indexNo": 15,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF8"
+        },
+        "cdf9": {
+          "indexNo": 16,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF9"
+        },
+        "cdf10": {
+          "indexNo": 17,
+          "type": "cds.String",
+          "@cds.persistence.name": "CDF10"
+        },
+        "controlOwners": {
+          "indexNo": 18,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.ControlOwners",
+          "cardinality": {
+            "targetMax": "*"
+          },
+          "onCond": {
+            "op": "=",
+            "args": [
+              {
+                "=": "controlOwners.control"
+              },
+              {
+                "=": "$self"
+              }
+            ]
+          },
+          "on": "controlOwners.control = $self",
+          "@cds.persistence.name": "CONTROLOWNERS"
+        },
+        "localized": {
+          "indexNo": 19,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.Controls_texts",
+          "onCond": {
+            "op": "and",
+            "args": [
+              {
+                "op": "=",
+                "args": [
+                  {
+                    "=": "localized.locale"
+                  },
+                  {
+                    "op": "call",
+                    "args": [
+                      "locale"
+                    ],
+                    "func": "session_context"
+                  }
+                ]
+              },
+              {
+                "op": "=",
+                "args": [
+                  {
+                    "=": "localized.control"
+                  },
+                  {
+                    "=": "$self"
+                  }
+                ]
+              }
+            ]
+          },
+          "on": "localized.locale = session_context('locale')\n  and localized.control = $self",
+          "@cds.persistence.name": "LOCALIZED"
+        },
+        "country_code": {
+          "type": "cds.String",
+          "length": 3,
+          "@odata.foreignKey4": "country",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@title": "{i18n>countryCode}",
+          "@description": "{i18n>countryCodeDescription}",
+          "@Common.Label": "{i18n>countryCode}",
+          "@cds.persistence.name": "COUNTRY_CODE"
+        }
+      },
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLS"
+    },
+    "com.sap.grc.ctrl.Controls_texts": {
+      "kind": "entity",
+      "elements": {
+        "control": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.Controls",
+          "foreignKeys": {
+            "ID": {
+              "path": "ID",
+              "indexNo": 1,
+              "generatedFieldName": "control_ID",
+              "@cds.persistence.name": "ID"
+            }
+          },
+          "@cds.persistence.name": "CONTROL"
+        },
+        "locale": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "length": 2,
+          "@cds.persistence.name": "LOCALE"
+        },
+        "controlName": {
+          "indexNo": 3,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLNAME"
+        },
+        "controlDesc": {
+          "indexNo": 4,
+          "type": "cds.String",
+          "@cds.persistence.name": "CONTROLDESC"
+        },
+        "control_ID": {
+          "type": "cds.Integer",
+          "key": true,
+          "@odata.foreignKey4": "control",
+          "@cds.persistence.name": "CONTROL_ID"
+        }
+      },
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLS_TEXTS"
+    },
+    "com.sap.grc.ctrl.ControlOwners": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Integer",
+          "@cds.persistence.name": "ID"
+        },
+        "control": {
+          "indexNo": 2,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.Controls",
+          "foreignKeys": {
+            "ID": {
+              "path": "ID",
+              "indexNo": 1,
+              "generatedFieldName": "control_ID",
+              "@cds.persistence.name": "ID"
+            }
+          },
+          "@cds.persistence.name": "CONTROL"
+        },
+        "ownerName": {
+          "indexNo": 3,
+          "type": "cds.String",
+          "@cds.persistence.name": "OWNERNAME"
+        },
+        "ownerEmail": {
+          "indexNo": 4,
+          "type": "cds.String",
+          "@cds.persistence.name": "OWNEREMAIL"
+        },
+        "control_ID": {
+          "type": "cds.Integer",
+          "@odata.foreignKey4": "control",
+          "@cds.persistence.name": "CONTROL_ID"
+        }
+      },
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLOWNERS"
+    },
+    "Language": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.common.Languages",
+      "@Common.ValueList.entity": "sap_common_Languages",
+      "@description": "{i18n>languageCodeDescription}",
+      "foreignKeys": {
+        "code": {
+          "path": "code",
+          "indexNo": 1,
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@Common.Label": "{i18n>languageCode}",
+      "@cds.persistence.name": "LANGUAGE"
+    },
+    "Currency": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.common.Currencies",
+      "@Common.ValueList.entity": "sap_common_Currencies",
+      "@description": "{i18n>currencyCodeDescription}",
+      "foreignKeys": {
+        "code": {
+          "path": "code",
+          "indexNo": 1,
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@Common.Label": "{i18n>currencyCode}",
+      "@cds.persistence.name": "CURRENCY"
+    },
+    "Country": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.common.Countries",
+      "@Common.ValueList.entity": "sap_common_Countries",
+      "@description": "{i18n>countryCodeDescription}",
+      "foreignKeys": {
+        "code": {
+          "path": "code",
+          "indexNo": 1,
+          "generatedFieldName": "country_code",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@Common.Label": "{i18n>countryCode}",
+      "@cds.persistence.name": "COUNTRY"
+    },
+    "LanguageCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "@Common.ValueList.entity": "sap_common_Languages",
+      "@description": "{i18n>languageCodeDescription}",
+      "length": 5,
+      "@Common.Label": "{i18n>languageCode}",
+      "@cds.persistence.name": "LANGUAGECODE"
+    },
+    "CountryCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "@Common.ValueList.entity": "sap_common_Countries",
+      "@description": "{i18n>countryCodeDescription}",
+      "length": 3,
+      "@Common.Label": "{i18n>countryCode}",
+      "@cds.persistence.name": "COUNTRYCODE"
+    },
+    "CurrencyCode": {
+      "kind": "type",
+      "type": "cds.String",
+      "@Common.ValueList.entity": "sap_common_Currencies",
+      "@description": "{i18n>currencyCodeDescription}",
+      "length": 3,
+      "@Common.Label": "{i18n>currencyCode}",
+      "@cds.persistence.name": "CURRENCYCODE"
+    },
+    "sap.common": {
+      "kind": "context"
+    },
+    "sap.common.Languages": {
+      "kind": "entity",
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "sap.common.CodeList..name",
+          "indexNo": 1,
+          "localized": true,
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "NAME"
+        },
+        "descr": {
+          "origin": "sap.common.CodeList..descr",
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000,
+          "@cds.persistence.name": "DESCR"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 3,
+          "type": "cds.String",
+          "@Common.ValueList.entity": "sap_common_Languages",
+          "@description": "{i18n>languageCodeDescription}",
+          "length": 5,
+          "@Common.Label": "{i18n>languageCode}",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.persistence.name": "SAP_COMMON_LANGUAGES"
+    },
+    "sap.common.Countries": {
+      "kind": "entity",
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "sap.common.CodeList..name",
+          "indexNo": 1,
+          "localized": true,
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "NAME"
+        },
+        "descr": {
+          "origin": "sap.common.CodeList..descr",
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000,
+          "@cds.persistence.name": "DESCR"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 3,
+          "type": "cds.String",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@description": "{i18n>countryCodeDescription}",
+          "length": 3,
+          "@Common.Label": "{i18n>countryCode}",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.persistence.name": "SAP_COMMON_COUNTRIES"
+    },
+    "sap.common.Currencies": {
+      "kind": "entity",
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "origin": "sap.common.CodeList..name",
+          "indexNo": 1,
+          "localized": true,
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "NAME"
+        },
+        "descr": {
+          "origin": "sap.common.CodeList..descr",
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000,
+          "@cds.persistence.name": "DESCR"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 3,
+          "type": "cds.String",
+          "@Common.ValueList.entity": "sap_common_Currencies",
+          "@description": "{i18n>currencyCodeDescription}",
+          "length": 3,
+          "@Common.Label": "{i18n>currencyCode}",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.persistence.name": "SAP_COMMON_CURRENCIES"
+    },
+    "sap.common.CodeList": {
+      "abstract": true,
+      "kind": "entity",
+      "elements": {
+        "name": {
+          "indexNo": 1,
+          "localized": true,
+          "type": "cds.String",
+          "length": 255,
+          "@cds.persistence.name": "NAME"
+        },
+        "descr": {
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000,
+          "@cds.persistence.name": "DESCR"
+        }
+      },
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.persistence.name": "SAP_COMMON_CODELIST"
+    },
+    "managed": {
+      "kind": "type",
+      "elements": {
+        "modifiedAt": {
+          "indexNo": 1,
+          "type": "cds.DateTime",
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@odata.etag": true,
+          "@UI.HiddenFilter": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "@Common.Label": "{i18n>changedOn}",
+          "@Core.Immutable": true,
+          "@cds.persistence.name": "MODIFIEDAT"
+        },
+        "createdAt": {
+          "indexNo": 2,
+          "type": "cds.DateTime",
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "@Common.Label": "{i18n>createdOn}",
+          "@Core.Immutable": true,
+          "@cds.persistence.name": "CREATEDAT"
+        },
+        "createdBy": {
+          "indexNo": 3,
+          "type": "cds.String",
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>userIDDescription}",
+          "length": 255,
+          "@Common.Label": "{i18n>createdBy}",
+          "@Core.Immutable": true,
+          "@cds.persistence.name": "CREATEDBY"
+        },
+        "modifiedBy": {
+          "indexNo": 4,
+          "type": "cds.String",
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>userIDDescription}",
+          "length": 255,
+          "@Common.Label": "{i18n>changedBy}",
+          "@Core.Immutable": true,
+          "@cds.persistence.name": "MODIFIEDBY"
+        }
+      },
+      "@cds.persistence.name": "MANAGED"
+    },
+    "temporal": {
+      "kind": "type",
+      "elements": {
+        "valid": {
+          "indexNo": 1,
+          "type": "Period",
+          "@cds.persistence.name": "VALID"
+        }
+      },
+      "@cds.persistence.name": "TEMPORAL"
+    },
+    "Period": {
+      "kind": "type",
+      "elements": {
+        "start": {
+          "indexNo": 1,
+          "type": "cds.DateTime",
+          "@cds.persistence.name": "START"
+        },
+        "end": {
+          "indexNo": 2,
+          "type": "cds.DateTime",
+          "@cds.persistence.name": "END"
+        }
+      },
+      "@cds.persistence.name": "PERIOD"
+    },
+    "User": {
+      "kind": "type",
+      "type": "cds.String",
+      "@description": "{i18n>userIDDescription}",
+      "length": 255,
+      "@Common.Label": "{i18n>userID}",
+      "@cds.persistence.name": "USER"
+    },
+    "ControlService.sap_common_Countries": {
+      "kind": "entity",
+      "source": "sap.common.Countries",
+      "elements": {
+        "name": {
+          "origin": "sap.common.Countries..name",
+          "indexNo": 1,
+          "localized": true,
+          "type": "cds.String",
+          "length": 255,
+          "value": {
+            "=": "Countries.name"
+          },
+          "@cds.persistence.name": "NAME"
+        },
+        "descr": {
+          "origin": "sap.common.Countries..descr",
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000,
+          "value": {
+            "=": "Countries.descr"
+          },
+          "@cds.persistence.name": "DESCR"
+        },
+        "code": {
+          "key": true,
+          "indexNo": 3,
+          "type": "cds.String",
+          "@Common.ValueList.entity": "sap_common_Countries",
+          "@description": "{i18n>countryCodeDescription}",
+          "length": 3,
+          "@Common.Label": "{i18n>countryCode}",
+          "value": {
+            "=": "Countries.code"
+          },
+          "origin": "sap.common.Countries..code",
+          "@cds.persistence.name": "CODE"
+        }
+      },
+      "@cds.persistence.name": "CONTROLSERVICE_SAP_COMMON_COUNTRIES"
+    }
+  },
+  "version": {
+    "creator": "CDS Compiler v1.1.3",
+    "csn": "0.1.0"
+  },
+  "@sql_mapping": "plain"
+}

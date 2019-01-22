@@ -1,0 +1,10 @@
+---
+applications:
+  - name: Control-srv
+    memory: 512M
+    buildpack: sap_java_buildpack
+    path: target/Control-srv-1.0-SNAPSHOT.war  
+    services:
+    - Control
+    env:
+      destinations: '[{name: "ODataEndPoint", url: "ODataServerURL", username: "UserID", password: "Password"}]'
