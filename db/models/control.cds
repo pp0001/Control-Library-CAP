@@ -1,4 +1,7 @@
 namespace com.sap.grc.ctrl;
+//using { User, Country } from '@sap/cds/common';
+context control {
+
 	entity Controls {
 	  key ID : Integer;
 	  controlName  : localized String;
@@ -18,9 +21,9 @@ namespace com.sap.grc.ctrl;
 	  cdf9 : String;
 	  cdf10 : String;
 	  controlOwners : Association to many ControlOwners on controlOwners.control = $self;
-	  //localized : Association to  Controls_texts
-	  //on localized.locale = session_context('locale')
-	  //and localized.control = $self ;
+	  localized : Association to  Controls_texts
+	  on localized.locale = session_context('locale')
+	  and localized.control = $self ;
 	}
 	
 	entity Controls_texts {
@@ -36,7 +39,5 @@ namespace com.sap.grc.ctrl;
 	  ownerEmail : String;
 	}	
 	
-	entity ControlGroup {
-	  key ID : Integer;
-	  groupName   : String;
-	}
+}
+

@@ -1,0 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+---
+spring:
+  profiles: default
+  datasource:
+    url: ${dburl}
+    username: ${dbuser}
+    password: ${dbpassword}
+    driverClassName: com.sap.db.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource

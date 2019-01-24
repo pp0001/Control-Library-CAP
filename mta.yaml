@@ -26,6 +26,12 @@ modules:
           JBP_CONFIG_RESOURCE_CONFIGURATION: >-
             [tomcat/webapps/ROOT/META-INF/context.xml:
             {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]
+          db_service_instance_name: ~{hdi-container-name}
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud
+    build-parameters:
+      ignore: ["*.md"]
+      build-result: target/*.jar
 resources:
   - name: Control-hdi-container
     properties:

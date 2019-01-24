@@ -1,7 +1,8 @@
-using { com.sap.grc.ctrl, sap.common } from '../db/data-model';
+using com.sap.grc.ctrl from '../db/data-model';
 
 service ControlService {
-  entity Owners @readonly as projection on ctrl.ControlOwners;
-  entity Controls @readonly as projection on ctrl.Controls;
+  entity ControlOwners @insert as projection on ctrl.ControlOwners;
+  entity ControlGroups @insert as projection on ctrl.ControlGroup;
+  entity Controls @read @insert @update as projection on ctrl.Controls;
   entity texts @readonly as projection on ctrl.Controls_texts;
 }
