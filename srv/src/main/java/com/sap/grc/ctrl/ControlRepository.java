@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface ControlRepository extends JpaRepository<Controls, String> {
+public interface ControlRepository extends JpaRepository<Controls, Integer> {
 
 }

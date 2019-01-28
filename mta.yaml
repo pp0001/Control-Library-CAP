@@ -16,6 +16,10 @@ modules:
     parameters:
       memory: 512M
       disk-quota: 256M
+      buildpack: sap_java_buildpack
+    properties:
+      SPRING_PROFILES_ACTIVE: cloud
+      JBP_CONFIG_JAVA_OPTS: [java_opts: '-XX:+ForceDebuggingOnDemand -Dcom.sun.management.jmxremote.port=5000 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.rmi.port=5000 -Dcom.sun.management.jmxremote.ssl=false']
     provides:
       - name: srv_api
         properties:
@@ -23,12 +27,10 @@ modules:
     requires:
       - name: Control-hdi-container
         properties:
-          JBP_CONFIG_RESOURCE_CONFIGURATION: >-
-            [tomcat/webapps/ROOT/META-INF/context.xml:
-            {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]
+          #JBP_CONFIG_RESOURCE_CONFIGURATION: >-
+          #  [tomcat/webapps/ROOT/WEB-INF/resources.xml:
+          #  {"service_name_for_DefaultDB" : "~{hdi-container-name}"}]
           db_service_instance_name: ~{hdi-container-name}
-    properties:
-      SPRING_PROFILES_ACTIVE: cloud
     build-parameters:
       ignore: ["*.md"]
       build-result: target/*.jar

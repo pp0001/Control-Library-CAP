@@ -1,15 +1,24 @@
 management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
----
+  security:
+    enabled: false
+  endpoints.web.exposure.include: "*"
+spring.jpa.hibernate.naming:
+  implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#spring.datasource.hikari.maximumPoolSize: 1000
+server.servlet.context-parameters.package: com.sap.grc.questionnaire.srv
+server.servlet.context-parameters.DBConnection: com.sap.cloud.servicesdk.spring.SpringConnectionProvider
+server.servlet.context-parameters.ExtensionConfig: com.sap.cloud.servicesdk.spring.SpringExtensionConfig
+com.sap.icd.mt:
+  debug: true
+  automaticPaasOnboarding: true
+  poolProvider: hikari
 spring:
   profiles: default
   datasource:
-    url: ${dburl}
-    username: ${dbuser}
-    password: ${dbpassword}
+    url: jdbc:sap://10.253.93.93:30041/?currentschema=CONTROL_LIBRARY_CAP_CONTROL_HDI_CONTAINER_1
+    username: SBSS_46839487471295081384193587576474483531089616904199544484194932990
+    password: Ld87VMrnO.o4Cn6ni_xWTs57PxjCVZd3eN7-ovXmkf6ZTKwNcplDV_OA7N7bXJCFQFIQ_2bkhi0DpXdnP4HO1Byg3xRZbAb1-IexbnTz6F0iGFrNIy-VoDRy_sz5YjUI
     driverClassName: com.sap.db.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+com.sap.icd.mt.enabled: false

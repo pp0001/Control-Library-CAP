@@ -26,6 +26,11 @@ import com.sap.grc.ctrl.jpa.com.sap.grc.ctrl.Controls;
 import com.sap.grc.ctrl.jpa.com.sap.grc.ctrl.ControlOwners;
 import org.apache.olingo.odata2.api.exception.ODataApplicationException;
 import org.springframework.stereotype.Component;
+import com.sap.cloud.sdk.service.prov.api.exception.DatasourceException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
 public class ControlService {
@@ -41,12 +46,11 @@ public class ControlService {
 			return BeforeCreateResponse
 					.setError(constructErrorResponse(validationErrors, createRequest.getMessageContainer()).response());
 		}
-
 		return BeforeCreateResponse.setSuccess()
 				.setEntityData(EntityData.createFromMap(controlData, Arrays.asList("ID"), "Controls")).response();
 	}
 
-	private static final List<String> CONTROL_ELEMENTS_MANDATORY = Arrays.asList("ID", "controlName");
+	private static final List<String> CONTROL_ELEMENTS_MANDATORY = Arrays.asList("ID", "controlName", "validFrom", "validTo");
 	private static final Map<String, String> CONTROL_ELEMENTS_VALUEHELP = new HashMap<String, String>() {
 		private static final long serialVersionUID = 5238989057589476607L;
 		{
@@ -87,20 +91,41 @@ public class ControlService {
 		return ErrorResponse.getBuilder().setMessage("error").setStatusCode(HttpStatusCodes.BAD_REQUEST.getStatusCode())
 				.addContainerMessages();
 	}
-
+	
+	@Autowired
 	private ControlRepository controlRepository;
 
 	@Create(entity = "Controls", serviceName = "ControlService")
-	public CreateResponse createOrder(CreateRequest createRequest, ExtensionHelper extensionHelper)
-			throws NamingException, ODataApplicationException {
-		EntityManager em = (EntityManager) (new InitialContext()).lookup("java:comp/env/jpa/default/pc");
-		em.persist(createRequest.getData().as(Controls.class));
-		EntityData entityData = createRequest.getData();
-		// Controls controls = createRequest.getData().as(Controls.class);
-		// controlRepository.save(controls);
-		EntityData createdEntity = EntityData.getBuilder(entityData).buildEntityData("Controls");
-		return CreateResponse.setSuccess().setData(createdEntity).response();
+	public CreateResponse create(CreateRequest createRequest, ExtensionHelper extensionHelper){
+		Controls control = new Controls();
+		  control.setID(1);		
+		  control.setControlName("controlName");
+		controlRepository.save(control);
+		return CreateResponse.setSuccess().setData(createRequest.getData()).response();
 	}
+	// public CreateResponse createOrder(CreateRequest createRequest, ExtensionHelper extensionHelper)
+	// 		throws NamingException, ODataApplicationException, DatasourceException {
+	// 	// EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "default" );
+ //      //EntityManager em = (EntityManager) (new InitialContext()).lookup("java:comp/env/jpa/default/pc");
+ //      Map addedOrOverridenProperties = new HashMap();
+
+	// 	// Let's suppose we are using Hibernate as JPA provider
+	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.url", "jdbc:sap://10.253.93.93:30041/?currentschema=CONTROL_LIBRARY_CAP_CONTROL_HDI_CONTAINER_1");
+	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.driver", "com.sap.db.jdbc.Driver");
+	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.user", "SBSS_80684906683260027450210628599554660760477956452509382328397847281");
+ //   	addedOrOverridenProperties.put("javax.persistence.jdbc.password", 
+ //   		"Pi0PVrER34lJkFRM79JBRekiA4SOZp71w0tYTQboiHRh-IIzBCu0XlaTliLZJpD4JqxiueJPK73ROgXbJ-XHT5YgClxr-fLA7Z9dJrXZV.U934C52L4rn4hrAEffcJtA");
+ //     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test", addedOrOverridenProperties);
+ //     EntityManager entitymanager = emfactory.createEntityManager( );
+ //     entitymanager.getTransaction( ).begin( );
+
+
+ //     Controls control = new Controls();
+	//   control.setID(1);		
+	//   control.setControlName("controlName");
+ //     entitymanager.persist( control );
+	// 	return CreateResponse.setSuccess().setData(createRequest.getData()).response();
+	// }
 
 	@BeforeRead(entity = "Controls", serviceName = "ControlService")
 	public BeforeReadResponse beforeReadControls(ReadRequest req, ExtensionHelper h) {
@@ -111,7 +136,7 @@ public class ControlService {
 	@AfterRead(entity = "Controls", serviceName = "ControlService")
 	public ReadResponse afterReadOrders(ReadRequest req, ReadResponseAccessor res, ExtensionHelper h) {
 		EntityData ed = res.getEntityData();
-		EntityData ex = EntityData.getBuilder(ed).addElement("age", 1000).buildEntityData("Controls");
+		EntityData ex = EntityData.getBuilder(ed).addElement("cdf2", "1000").buildEntityData("Controls");
 		return ReadResponse.setSuccess().setData(ex).response();
 	}
 
@@ -121,7 +146,7 @@ public class ControlService {
 		List<EntityData> modifiedList = new ArrayList<EntityData>(dataList.size()); // modified list
 		for (EntityData ed : dataList) {
 			String cdf1 = (String) ed.getElementValue("cdf1");
-			EntityData ex = EntityData.getBuilder(ed).addElement("age", cdf1).buildEntityData("Controls");
+			EntityData ex = EntityData.getBuilder(ed).addElement("cdf1", cdf1).buildEntityData("Controls");
 			modifiedList.add(ex);
 		}
 		return QueryResponse.setSuccess().setData(modifiedList).response();
