@@ -1,24 +1,21 @@
 management:
-  security:
-    enabled: false
-  endpoints.web.exposure.include: "*"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 spring.jpa.hibernate.naming:
   implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
   physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-#spring.datasource.hikari.maximumPoolSize: 1000
-server.servlet.context-parameters.package: com.sap.grc.questionnaire.srv
-server.servlet.context-parameters.DBConnection: com.sap.cloud.servicesdk.spring.SpringConnectionProvider
-server.servlet.context-parameters.ExtensionConfig: com.sap.cloud.servicesdk.spring.SpringExtensionConfig
-com.sap.icd.mt:
-  debug: true
-  automaticPaasOnboarding: true
-  poolProvider: hikari
+
+#server.servlet.context-parameters.package: com.sap.grc.ctrl
+#server.servlet.context-parameters.DBConnection: com.sap.cloud.servicesdk.spring.SpringConnectionProvider
+#server.servlet.context-parameters.ExtensionConfig: com.sap.cloud.servicesdk.spring.SpringExtensionConfig
+---
 spring:
   profiles: default
   datasource:
-    url: jdbc:sap://10.253.93.93:30041/?currentschema=CONTROL_LIBRARY_CAP_CONTROL_HDI_CONTAINER_1
-    username: SBSS_46839487471295081384193587576474483531089616904199544484194932990
-    password: Ld87VMrnO.o4Cn6ni_xWTs57PxjCVZd3eN7-ovXmkf6ZTKwNcplDV_OA7N7bXJCFQFIQ_2bkhi0DpXdnP4HO1Byg3xRZbAb1-IexbnTz6F0iGFrNIy-VoDRy_sz5YjUI
+    url: jdbc:sap://localhost:30015/?currentschema=C5C261A595B84CF9B5C6EDC5EE5632A6
+    username: SBSS_99576839431497164421027533288227080982870328481689947431732643534
+    password: Uv2.M6T3-pb5OfHCQPj7TZD6RP33syLwxTrU3ZzkZwyzEUzaF.roct.eVf.V6vlZGUCruOMlD49CgzS7ZtDky3HvgMznyqIZVAi5Dd2DmUp5GFfDvXsHEeTZSbuyQK5I
     driverClassName: com.sap.db.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
-com.sap.icd.mt.enabled: false

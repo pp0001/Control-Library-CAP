@@ -1,41 +1,129 @@
 package com.sap.grc.ctrl;
 
 import java.util.ArrayList;
-import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.sap.cloud.sdk.service.prov.api.*;
-import com.sap.cloud.sdk.service.prov.api.annotations.*;
-import com.sap.cloud.sdk.service.prov.api.exits.*;
-import com.sap.cloud.sdk.service.prov.api.request.*;
-import com.sap.cloud.sdk.service.prov.api.response.*;
-import com.sap.cloud.sdk.service.prov.api.constants.HttpStatusCodes;
-import org.slf4j.*;
-import com.sap.cloud.sdk.service.prov.api.operations.*;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.EntityManager;
-import com.sap.grc.ctrl.jpa.com.sap.grc.ctrl.Controls;
-import com.sap.grc.ctrl.jpa.com.sap.grc.ctrl.ControlOwners;
-import org.apache.olingo.odata2.api.exception.ODataApplicationException;
-import org.springframework.stereotype.Component;
-import com.sap.cloud.sdk.service.prov.api.exception.DatasourceException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.sap.cloud.sdk.service.prov.api.EntityData;
+import com.sap.cloud.sdk.service.prov.api.ExtensionHelper;
+import com.sap.cloud.sdk.service.prov.api.MessageContainer;
+import com.sap.cloud.sdk.service.prov.api.annotations.AfterQuery;
+import com.sap.cloud.sdk.service.prov.api.annotations.AfterRead;
+import com.sap.cloud.sdk.service.prov.api.annotations.BeforeCreate;
+import com.sap.cloud.sdk.service.prov.api.annotations.BeforeRead;
+import com.sap.cloud.sdk.service.prov.api.constants.HttpStatusCodes;
+import com.sap.cloud.sdk.service.prov.api.exits.BeforeCreateResponse;
+import com.sap.cloud.sdk.service.prov.api.exits.BeforeReadResponse;
+import com.sap.cloud.sdk.service.prov.api.operations.Create;
+import com.sap.cloud.sdk.service.prov.api.request.CreateRequest;
+import com.sap.cloud.sdk.service.prov.api.request.GenericRequest;
+import com.sap.cloud.sdk.service.prov.api.request.QueryRequest;
+import com.sap.cloud.sdk.service.prov.api.request.ReadRequest;
+import com.sap.cloud.sdk.service.prov.api.request.UpdateRequest;
+import com.sap.cloud.sdk.service.prov.api.response.CreateResponse;
+import com.sap.cloud.sdk.service.prov.api.response.ErrorResponse;
+import com.sap.cloud.sdk.service.prov.api.response.ErrorResponseBuilder;
+import com.sap.cloud.sdk.service.prov.api.response.QueryResponse;
+import com.sap.cloud.sdk.service.prov.api.response.QueryResponseAccessor;
+import com.sap.cloud.sdk.service.prov.api.response.ReadResponse;
+import com.sap.cloud.sdk.service.prov.api.response.ReadResponseAccessor;
+
+import jpa.com.sap.grc.ctrl.test.Controls;
 
 @Component
 public class ControlService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ControlService.class.getName());
+
+	@Autowired
+	private ControlRepository controlRepository;
+
+	@Create(entity = "Controls", serviceName = "ControlService")
+	public CreateResponse create(CreateRequest createRequest, ExtensionHelper extensionHelper) {
+//		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Tutorial");
+//		EntityManager entityManager = entityManagerFactory.createEntityManager();
+//		entityManager.getTransaction().begin();
+		EntityData data = createRequest.getData();
+		Controls control = new Controls();
+		control.setID((Integer) data.getElementValue("ID"));
+		control.setControlName((String) data.getElementValue("controlName"));
+		control.setControlGroup((String) data.getElementValue("controlGroup"));
+		control.setValidFrom((Date) data.getElementValue("validFrom"));
+		control.setCdf1((String) data.getElementValue("cdf1"));
+//		entityManager.persist(control);
+//		entityManager.getTransaction().commit();
+//		entityManager.clear();
+//		entityManager.close();
+		controlRepository.save(control);
+		return CreateResponse.setSuccess().setData(control).response();
+	}
+
+	private static final List<String> CONTROL_ELEMENTS_MANDATORY = Arrays.asList("ID", "controlName", "validFrom",
+			"validTo");
+
+	private static final Map<String, String> CONTROL_ELEMENTS_VALUEHELP = new HashMap<String, String>() {
+		private static final long serialVersionUID = 5238989057589476607L;
+		{
+			put("controlGroup", "ControlGroups");
+			put("controlRiskLevel", "ControlRiskLevels");
+			put("controlSignificance", "ControlSignificances");
+			put("operationFrequency", "OperationFrequencies");
+		}
+	};
+
+	private static final Map<String, String> ID_ELEMENTS_IN_ENTITIES = new HashMap<String, String>() {
+		private static final long serialVersionUID = 3000049089863922216L;
+		{
+//			put("controlGroup", "groupName");
+			put("controlRiskLevel", "riskLevelId");
+			put("controlSignificance", "significanceId");
+			put("operationFrequency", "frequencyId");
+			put("control_ID", "ID");
+		}
+	};
+
+	private static final Map<String, String> CONTROL_OWNER_ELEMENTS_MANDATORY = new HashMap<String, String>() {
+		private static final long serialVersionUID = 7744636325941625887L;
+		{
+			put("control_ID", "Controls");
+		}
+	};
+
+	@BeforeCreate(entitySet = "ControlOwners", serviceName = "ControlService")
+	public BeforeCreateResponse beforeCreateControlOwners(CreateRequest createRequest,
+			ExtensionHelper extensionHelper) {
+		// Check assigned control exist
+		Map<String, Object> controlOwnerData = createRequest.getData().asMap();
+		Map<String, String> validationErrors = validateAssignedControl(controlOwnerData, createRequest,
+				extensionHelper);
+		if (!validationErrors.isEmpty()) {
+			return BeforeCreateResponse
+					.setError(constructErrorResponse(validationErrors, createRequest.getMessageContainer()).response());
+		}
+		return BeforeCreateResponse.setSuccess()
+				.setEntityData(EntityData.createFromMap(controlOwnerData, Arrays.asList("ID"), "ControlOwners"))
+				.response();
+	}
+
+	private Map<String, String> validateAssignedControl(Map<String, Object> data, GenericRequest request,
+			ExtensionHelper extensionHelper) {
+		Map<String, String> validationErrors = new HashMap<String, String>();
+
+		CONTROL_OWNER_ELEMENTS_MANDATORY.forEach((element, entityName) -> checkElementExists(element, entityName, data,
+				validationErrors, extensionHelper));
+		if (request instanceof CreateRequest) {
+			checkElementDoesNotExist("ID", "ControlOwners", data, validationErrors, extensionHelper);
+		}
+		return validationErrors;
+	}
 
 	@BeforeCreate(entitySet = "Controls", serviceName = "ControlService")
 	public BeforeCreateResponse beforeCreateControls(CreateRequest createRequest, ExtensionHelper extensionHelper) {
@@ -50,27 +138,16 @@ public class ControlService {
 				.setEntityData(EntityData.createFromMap(controlData, Arrays.asList("ID"), "Controls")).response();
 	}
 
-	private static final List<String> CONTROL_ELEMENTS_MANDATORY = Arrays.asList("ID", "controlName", "validFrom", "validTo");
-	private static final Map<String, String> CONTROL_ELEMENTS_VALUEHELP = new HashMap<String, String>() {
-		private static final long serialVersionUID = 5238989057589476607L;
-		{
-			put("country", "country");
-			put("controlGroup", "controlGroup");
-		}
-	};
-
 	private Map<String, String> validateControl(Map<String, Object> controlData, GenericRequest request,
 			ExtensionHelper extensionHelper) {
 		Map<String, String> validationErrors = new HashMap<String, String>();
 
 		CONTROL_ELEMENTS_MANDATORY.forEach(element -> checkMandatory(controlData, validationErrors, element, request));
-		// CONTROL_ELEMENTS_VALUEHELP.forEach((element, entityName) ->
-		// checkElementExists(element, entityName, controlData, validationErrors,
-		// extensionHelper));
-		// if (request instanceof CreateRequest) {
-		// checkElementDoesNotExist(ELEMENT_PRODUCT_ID, ENTITY_PRODUCTS, controlData,
-		// validationErrors, extensionHelper);
-		// }
+		CONTROL_ELEMENTS_VALUEHELP.forEach((element, entityName) -> checkElementExists(element, entityName, controlData,
+				validationErrors, extensionHelper));
+		if (request instanceof CreateRequest) {
+			checkElementDoesNotExist("ID", "Controls", controlData, validationErrors, extensionHelper);
+		}
 		return validationErrors;
 	}
 
@@ -84,6 +161,41 @@ public class ControlService {
 		}
 	}
 
+	private void checkElementExists(String element, String entityName, Map<String, Object> entityData,
+			Map<String, String> validationErrors, ExtensionHelper extensionHelper) {
+		Object elementValue = entityData.get(element);
+		if (!entityData.containsKey(element) || elementValue.toString().length() == 0) {
+			return;
+		}
+		String entityId = ID_ELEMENTS_IN_ENTITIES.get(element);
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put(entityId, String.valueOf(elementValue));
+		try {
+			if (extensionHelper.getHandler().executeRead(entityName, keys, Arrays.asList(entityId)) == null) {
+				validationErrors.put(element, "valueDoesNotExist");
+			}
+		} catch (Exception e) {
+			LOG.warn(e.getMessage());
+		}
+	}
+
+	private void checkElementDoesNotExist(String elementID, String entityName, Map<String, Object> entityData,
+			Map<String, String> validationErrors, ExtensionHelper extensionHelper) {
+		Object elementValue = entityData.get(elementID);
+		if (elementValue == null) {
+			return;
+		}
+		Map<String, Object> keys = new HashMap<String, Object>();
+		keys.put(elementID, String.valueOf(elementValue));
+		try {
+			if (extensionHelper.getHandler().executeRead(entityName, keys, Arrays.asList(elementID)) != null) {
+				validationErrors.put(elementID, "valueExists");
+			}
+		} catch (Exception e) {
+			LOG.warn(e.getMessage());
+		}
+	}
+
 	private ErrorResponseBuilder constructErrorResponse(Map<String, String> validationErrors,
 			MessageContainer messageContainer) {
 		validationErrors.entrySet().stream()
@@ -91,41 +203,6 @@ public class ControlService {
 		return ErrorResponse.getBuilder().setMessage("error").setStatusCode(HttpStatusCodes.BAD_REQUEST.getStatusCode())
 				.addContainerMessages();
 	}
-	
-	@Autowired
-	private ControlRepository controlRepository;
-
-	@Create(entity = "Controls", serviceName = "ControlService")
-	public CreateResponse create(CreateRequest createRequest, ExtensionHelper extensionHelper){
-		Controls control = new Controls();
-		  control.setID(1);		
-		  control.setControlName("controlName");
-		controlRepository.save(control);
-		return CreateResponse.setSuccess().setData(createRequest.getData()).response();
-	}
-	// public CreateResponse createOrder(CreateRequest createRequest, ExtensionHelper extensionHelper)
-	// 		throws NamingException, ODataApplicationException, DatasourceException {
-	// 	// EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "default" );
- //      //EntityManager em = (EntityManager) (new InitialContext()).lookup("java:comp/env/jpa/default/pc");
- //      Map addedOrOverridenProperties = new HashMap();
-
-	// 	// Let's suppose we are using Hibernate as JPA provider
-	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.url", "jdbc:sap://10.253.93.93:30041/?currentschema=CONTROL_LIBRARY_CAP_CONTROL_HDI_CONTAINER_1");
-	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.driver", "com.sap.db.jdbc.Driver");
-	// 	addedOrOverridenProperties.put("javax.persistence.jdbc.user", "SBSS_80684906683260027450210628599554660760477956452509382328397847281");
- //   	addedOrOverridenProperties.put("javax.persistence.jdbc.password", 
- //   		"Pi0PVrER34lJkFRM79JBRekiA4SOZp71w0tYTQboiHRh-IIzBCu0XlaTliLZJpD4JqxiueJPK73ROgXbJ-XHT5YgClxr-fLA7Z9dJrXZV.U934C52L4rn4hrAEffcJtA");
- //     EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("test", addedOrOverridenProperties);
- //     EntityManager entitymanager = emfactory.createEntityManager( );
- //     entitymanager.getTransaction( ).begin( );
-
-
- //     Controls control = new Controls();
-	//   control.setID(1);		
-	//   control.setControlName("controlName");
- //     entitymanager.persist( control );
-	// 	return CreateResponse.setSuccess().setData(createRequest.getData()).response();
-	// }
 
 	@BeforeRead(entity = "Controls", serviceName = "ControlService")
 	public BeforeReadResponse beforeReadControls(ReadRequest req, ExtensionHelper h) {
@@ -136,7 +213,7 @@ public class ControlService {
 	@AfterRead(entity = "Controls", serviceName = "ControlService")
 	public ReadResponse afterReadOrders(ReadRequest req, ReadResponseAccessor res, ExtensionHelper h) {
 		EntityData ed = res.getEntityData();
-		EntityData ex = EntityData.getBuilder(ed).addElement("cdf2", "1000").buildEntityData("Controls");
+		EntityData ex = EntityData.getBuilder(ed).addElement("age", 1000).buildEntityData("Controls");
 		return ReadResponse.setSuccess().setData(ex).response();
 	}
 
@@ -146,7 +223,7 @@ public class ControlService {
 		List<EntityData> modifiedList = new ArrayList<EntityData>(dataList.size()); // modified list
 		for (EntityData ed : dataList) {
 			String cdf1 = (String) ed.getElementValue("cdf1");
-			EntityData ex = EntityData.getBuilder(ed).addElement("cdf1", cdf1).buildEntityData("Controls");
+			EntityData ex = EntityData.getBuilder(ed).addElement("age", cdf1).buildEntityData("Controls");
 			modifiedList.add(ex);
 		}
 		return QueryResponse.setSuccess().setData(modifiedList).response();

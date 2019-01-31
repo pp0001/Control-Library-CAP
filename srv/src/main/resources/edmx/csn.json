@@ -2,15 +2,15 @@
   "definitions": {
     "ControlService": {
       "kind": "service",
-      "@source": "srv/my-service.cds"
+      "@source": "srv\\my-service.cds"
     },
     "ControlService.ControlOwners": {
       "kind": "entity",
       "@insert": true,
-      "source": "com.sap.grc.ctrl.ControlOwners",
+      "source": "com.sap.grc.ctrl.test.ControlOwners",
       "elements": {
         "ID": {
-          "origin": "com.sap.grc.ctrl.ControlOwners..ID",
+          "origin": "com.sap.grc.ctrl.test.ControlOwners..ID",
           "indexNo": 1,
           "value": {
             "=": "ControlOwners.ID"
@@ -20,7 +20,7 @@
           "@cds.persistence.name": "ID"
         },
         "control": {
-          "origin": "com.sap.grc.ctrl.ControlOwners..control",
+          "origin": "com.sap.grc.ctrl.test.ControlOwners..control",
           "indexNo": 2,
           "value": {
             "=": "ControlOwners.control"
@@ -29,7 +29,7 @@
           "target": "ControlService.Controls",
           "foreignKeys": {
             "ID": {
-              "origin": "com.sap.grc.ctrl.ControlOwners..control.ID",
+              "origin": "com.sap.grc.ctrl.test.ControlOwners..control.ID",
               "indexNo": 1,
               "path": "ID",
               "generatedFieldName": "control_ID",
@@ -40,7 +40,7 @@
           "@cds.persistence.name": "CONTROL"
         },
         "ownerName": {
-          "origin": "com.sap.grc.ctrl.ControlOwners..ownerName",
+          "origin": "com.sap.grc.ctrl.test.ControlOwners..ownerName",
           "indexNo": 3,
           "value": {
             "=": "ControlOwners.ownerName"
@@ -49,7 +49,7 @@
           "@cds.persistence.name": "OWNERNAME"
         },
         "ownerEmail": {
-          "origin": "com.sap.grc.ctrl.ControlOwners..ownerEmail",
+          "origin": "com.sap.grc.ctrl.test.ControlOwners..ownerEmail",
           "indexNo": 4,
           "value": {
             "=": "ControlOwners.ownerEmail"
@@ -62,7 +62,7 @@
           "value": {
             "=": "ControlOwners.control_ID"
           },
-          "origin": "com.sap.grc.ctrl.ControlOwners..control_ID",
+          "origin": "com.sap.grc.ctrl.test.ControlOwners..control_ID",
           "@odata.foreignKey4": "control",
           "@cds.persistence.name": "CONTROL_ID"
         }
@@ -72,10 +72,10 @@
     "ControlService.ControlGroups": {
       "kind": "entity",
       "@insert": true,
-      "source": "com.sap.grc.ctrl.ControlGroup",
+      "source": "com.sap.grc.ctrl.test.ControlGroup",
       "elements": {
         "ID": {
-          "origin": "com.sap.grc.ctrl.ControlGroup..ID",
+          "origin": "com.sap.grc.ctrl.test.ControlGroup..ID",
           "indexNo": 1,
           "value": {
             "=": "ControlGroup.ID"
@@ -85,7 +85,7 @@
           "@cds.persistence.name": "ID"
         },
         "groupName": {
-          "origin": "com.sap.grc.ctrl.ControlGroup..groupName",
+          "origin": "com.sap.grc.ctrl.test.ControlGroup..groupName",
           "indexNo": 2,
           "value": {
             "=": "ControlGroup.groupName"
@@ -101,10 +101,10 @@
       "@read": true,
       "@insert": true,
       "@update": true,
-      "source": "com.sap.grc.ctrl.Controls",
+      "source": "com.sap.grc.ctrl.test.Controls",
       "elements": {
         "ID": {
-          "origin": "com.sap.grc.ctrl.Controls..ID",
+          "origin": "com.sap.grc.ctrl.test.Controls..ID",
           "indexNo": 1,
           "value": {
             "=": "Controls.ID"
@@ -114,7 +114,7 @@
           "@cds.persistence.name": "ID"
         },
         "controlName": {
-          "origin": "com.sap.grc.ctrl.Controls..controlName",
+          "origin": "com.sap.grc.ctrl.test.Controls..controlName",
           "indexNo": 2,
           "value": {
             "=": "Controls.controlName"
@@ -124,7 +124,7 @@
           "@cds.persistence.name": "CONTROLNAME"
         },
         "controlDesc": {
-          "origin": "com.sap.grc.ctrl.Controls..controlDesc",
+          "origin": "com.sap.grc.ctrl.test.Controls..controlDesc",
           "indexNo": 3,
           "value": {
             "=": "Controls.controlDesc"
@@ -134,7 +134,7 @@
           "@cds.persistence.name": "CONTROLDESC"
         },
         "controlGroup": {
-          "origin": "com.sap.grc.ctrl.Controls..controlGroup",
+          "origin": "com.sap.grc.ctrl.test.Controls..controlGroup",
           "indexNo": 4,
           "value": {
             "=": "Controls.controlGroup"
@@ -143,7 +143,7 @@
           "@cds.persistence.name": "CONTROLGROUP"
         },
         "validFrom": {
-          "origin": "com.sap.grc.ctrl.Controls..validFrom",
+          "origin": "com.sap.grc.ctrl.test.Controls..validFrom",
           "indexNo": 5,
           "value": {
             "=": "Controls.validFrom"
@@ -152,7 +152,7 @@
           "@cds.persistence.name": "VALIDFROM"
         },
         "validTo": {
-          "origin": "com.sap.grc.ctrl.Controls..validTo",
+          "origin": "com.sap.grc.ctrl.test.Controls..validTo",
           "indexNo": 6,
           "value": {
             "=": "Controls.validTo"
@@ -161,7 +161,7 @@
           "@cds.persistence.name": "VALIDTO"
         },
         "cdf1": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf1",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf1",
           "indexNo": 7,
           "value": {
             "=": "Controls.cdf1"
@@ -170,7 +170,7 @@
           "@cds.persistence.name": "CDF1"
         },
         "cdf2": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf2",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf2",
           "indexNo": 8,
           "value": {
             "=": "Controls.cdf2"
@@ -179,7 +179,7 @@
           "@cds.persistence.name": "CDF2"
         },
         "cdf3": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf3",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf3",
           "indexNo": 9,
           "value": {
             "=": "Controls.cdf3"
@@ -188,7 +188,7 @@
           "@cds.persistence.name": "CDF3"
         },
         "cdf4": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf4",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf4",
           "indexNo": 10,
           "value": {
             "=": "Controls.cdf4"
@@ -197,7 +197,7 @@
           "@cds.persistence.name": "CDF4"
         },
         "cdf5": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf5",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf5",
           "indexNo": 11,
           "value": {
             "=": "Controls.cdf5"
@@ -206,7 +206,7 @@
           "@cds.persistence.name": "CDF5"
         },
         "cdf6": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf6",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf6",
           "indexNo": 12,
           "value": {
             "=": "Controls.cdf6"
@@ -215,7 +215,7 @@
           "@cds.persistence.name": "CDF6"
         },
         "cdf7": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf7",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf7",
           "indexNo": 13,
           "value": {
             "=": "Controls.cdf7"
@@ -224,7 +224,7 @@
           "@cds.persistence.name": "CDF7"
         },
         "cdf8": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf8",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf8",
           "indexNo": 14,
           "value": {
             "=": "Controls.cdf8"
@@ -233,7 +233,7 @@
           "@cds.persistence.name": "CDF8"
         },
         "cdf9": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf9",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf9",
           "indexNo": 15,
           "value": {
             "=": "Controls.cdf9"
@@ -242,7 +242,7 @@
           "@cds.persistence.name": "CDF9"
         },
         "cdf10": {
-          "origin": "com.sap.grc.ctrl.Controls..cdf10",
+          "origin": "com.sap.grc.ctrl.test.Controls..cdf10",
           "indexNo": 16,
           "value": {
             "=": "Controls.cdf10"
@@ -251,7 +251,7 @@
           "@cds.persistence.name": "CDF10"
         },
         "controlOwners": {
-          "origin": "com.sap.grc.ctrl.Controls..controlOwners",
+          "origin": "com.sap.grc.ctrl.test.Controls..controlOwners",
           "indexNo": 17,
           "value": {
             "=": "Controls.controlOwners"
@@ -282,10 +282,10 @@
     "ControlService.texts": {
       "kind": "entity",
       "@readonly": true,
-      "source": "com.sap.grc.ctrl.Controls_texts",
+      "source": "com.sap.grc.ctrl.test.Controls_texts",
       "elements": {
         "control": {
-          "origin": "com.sap.grc.ctrl.Controls_texts..control",
+          "origin": "com.sap.grc.ctrl.test.Controls_texts..control",
           "indexNo": 1,
           "value": {
             "=": "Controls_texts.control"
@@ -295,7 +295,7 @@
           "target": "ControlService.Controls",
           "foreignKeys": {
             "ID": {
-              "origin": "com.sap.grc.ctrl.Controls_texts..control.ID",
+              "origin": "com.sap.grc.ctrl.test.Controls_texts..control.ID",
               "indexNo": 1,
               "path": "ID",
               "generatedFieldName": "control_ID",
@@ -306,7 +306,7 @@
           "@cds.persistence.name": "CONTROL"
         },
         "locale": {
-          "origin": "com.sap.grc.ctrl.Controls_texts..locale",
+          "origin": "com.sap.grc.ctrl.test.Controls_texts..locale",
           "indexNo": 2,
           "value": {
             "=": "Controls_texts.locale"
@@ -317,7 +317,7 @@
           "@cds.persistence.name": "LOCALE"
         },
         "controlName": {
-          "origin": "com.sap.grc.ctrl.Controls_texts..controlName",
+          "origin": "com.sap.grc.ctrl.test.Controls_texts..controlName",
           "indexNo": 3,
           "value": {
             "=": "Controls_texts.controlName"
@@ -326,7 +326,7 @@
           "@cds.persistence.name": "CONTROLNAME"
         },
         "controlDesc": {
-          "origin": "com.sap.grc.ctrl.Controls_texts..controlDesc",
+          "origin": "com.sap.grc.ctrl.test.Controls_texts..controlDesc",
           "indexNo": 4,
           "value": {
             "=": "Controls_texts.controlDesc"
@@ -340,7 +340,7 @@
           "value": {
             "=": "Controls_texts.control_ID"
           },
-          "origin": "com.sap.grc.ctrl.Controls_texts..control_ID",
+          "origin": "com.sap.grc.ctrl.test.Controls_texts..control_ID",
           "@odata.foreignKey4": "control",
           "@cds.persistence.name": "CONTROL_ID"
         }
@@ -350,7 +350,7 @@
       "@Capabilities.UpdateRestrictions.Updatable": false,
       "@cds.persistence.name": "CONTROLSERVICE_TEXTS"
     },
-    "com.sap.grc.ctrl.Controls": {
+    "com.sap.grc.ctrl.test.Controls": {
       "kind": "entity",
       "elements": {
         "ID": {
@@ -439,7 +439,7 @@
         "controlOwners": {
           "indexNo": 17,
           "type": "cds.Association",
-          "target": "com.sap.grc.ctrl.ControlOwners",
+          "target": "com.sap.grc.ctrl.test.ControlOwners",
           "cardinality": {
             "targetMax": "*"
           },
@@ -458,16 +458,16 @@
           "@cds.persistence.name": "CONTROLOWNERS"
         }
       },
-      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLS"
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_TEST_CONTROLS"
     },
-    "com.sap.grc.ctrl.Controls_texts": {
+    "com.sap.grc.ctrl.test.Controls_texts": {
       "kind": "entity",
       "elements": {
         "control": {
           "key": true,
           "indexNo": 1,
           "type": "cds.Association",
-          "target": "com.sap.grc.ctrl.Controls",
+          "target": "com.sap.grc.ctrl.test.Controls",
           "foreignKeys": {
             "ID": {
               "path": "ID",
@@ -502,9 +502,9 @@
           "@cds.persistence.name": "CONTROL_ID"
         }
       },
-      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLS_TEXTS"
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_TEST_CONTROLS_TEXTS"
     },
-    "com.sap.grc.ctrl.ControlOwners": {
+    "com.sap.grc.ctrl.test.ControlOwners": {
       "kind": "entity",
       "elements": {
         "ID": {
@@ -516,7 +516,7 @@
         "control": {
           "indexNo": 2,
           "type": "cds.Association",
-          "target": "com.sap.grc.ctrl.Controls",
+          "target": "com.sap.grc.ctrl.test.Controls",
           "foreignKeys": {
             "ID": {
               "path": "ID",
@@ -543,9 +543,9 @@
           "@cds.persistence.name": "CONTROL_ID"
         }
       },
-      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLOWNERS"
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_TEST_CONTROLOWNERS"
     },
-    "com.sap.grc.ctrl.ControlGroup": {
+    "com.sap.grc.ctrl.test.ControlGroup": {
       "kind": "entity",
       "elements": {
         "ID": {
@@ -560,7 +560,7 @@
           "@cds.persistence.name": "GROUPNAME"
         }
       },
-      "@cds.persistence.name": "COM_SAP_GRC_CTRL_CONTROLGROUP"
+      "@cds.persistence.name": "COM_SAP_GRC_CTRL_TEST_CONTROLGROUP"
     }
   },
   "version": {

@@ -1,4 +1,4 @@
-namespace com.sap.grc.ctrl;
+namespace com.sap.grc.ctrl.test;
 	entity Controls {
 	  key ID : Integer;
 	  controlName  : localized String;

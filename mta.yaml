@@ -19,7 +19,6 @@ modules:
       buildpack: sap_java_buildpack
     properties:
       SPRING_PROFILES_ACTIVE: cloud
-      JBP_CONFIG_JAVA_OPTS: [java_opts: '-XX:+ForceDebuggingOnDemand -Dcom.sun.management.jmxremote.port=5000 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.rmi.port=5000 -Dcom.sun.management.jmxremote.ssl=false']
     provides:
       - name: srv_api
         properties:
@@ -35,7 +34,7 @@ modules:
       ignore: ["*.md"]
       build-result: target/*.jar
 resources:
-  - name: Control-hdi-container
+  - name: control-local-dev-hdi
     properties:
       hdi-container-name: '${service-name}'
     type: com.sap.xs.hdi-container

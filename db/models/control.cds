@@ -1,4 +1,4 @@
-namespace com.sap.grc.ctrl;
+namespace com.sap.grc.ctrl.test;
 //using { User, Country } from '@sap/cds/common';
 context control {
 

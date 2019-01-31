@@ -1,0 +1,175 @@
+{
+  "definitions": {
+    "com.sap.grc.ctrl.test.Controls": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Integer"
+        },
+        "controlName": {
+          "indexNo": 2,
+          "localized": true,
+          "type": "cds.String"
+        },
+        "controlDesc": {
+          "indexNo": 3,
+          "localized": true,
+          "type": "cds.String"
+        },
+        "controlGroup": {
+          "indexNo": 4,
+          "type": "cds.String"
+        },
+        "validFrom": {
+          "indexNo": 5,
+          "type": "cds.Date"
+        },
+        "validTo": {
+          "indexNo": 6,
+          "type": "cds.Date"
+        },
+        "cdf1": {
+          "indexNo": 7,
+          "type": "cds.String"
+        },
+        "cdf2": {
+          "indexNo": 8,
+          "type": "cds.String"
+        },
+        "cdf3": {
+          "indexNo": 9,
+          "type": "cds.String"
+        },
+        "cdf4": {
+          "indexNo": 10,
+          "type": "cds.String"
+        },
+        "cdf5": {
+          "indexNo": 11,
+          "type": "cds.String"
+        },
+        "cdf6": {
+          "indexNo": 12,
+          "type": "cds.String"
+        },
+        "cdf7": {
+          "indexNo": 13,
+          "type": "cds.String"
+        },
+        "cdf8": {
+          "indexNo": 14,
+          "type": "cds.String"
+        },
+        "cdf9": {
+          "indexNo": 15,
+          "type": "cds.String"
+        },
+        "cdf10": {
+          "indexNo": 16,
+          "type": "cds.String"
+        },
+        "controlOwners": {
+          "indexNo": 17,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.test.ControlOwners",
+          "cardinality": {
+            "targetMax": "*"
+          },
+          "onCond": {
+            "op": "=",
+            "args": [
+              {
+                "=": "controlOwners.control"
+              },
+              {
+                "=": "$self"
+              }
+            ]
+          },
+          "on": "controlOwners.control = $self"
+        }
+      }
+    },
+    "com.sap.grc.ctrl.test.Controls_texts": {
+      "kind": "entity",
+      "elements": {
+        "control": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.test.Controls",
+          "foreignKeys": {
+            "ID": {
+              "path": "ID",
+              "indexNo": 1
+            }
+          }
+        },
+        "locale": {
+          "key": true,
+          "indexNo": 2,
+          "type": "cds.String",
+          "length": 2
+        },
+        "controlName": {
+          "indexNo": 3,
+          "type": "cds.String"
+        },
+        "controlDesc": {
+          "indexNo": 4,
+          "type": "cds.String"
+        }
+      }
+    },
+    "com.sap.grc.ctrl.test.ControlOwners": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Integer"
+        },
+        "control": {
+          "indexNo": 2,
+          "type": "cds.Association",
+          "target": "com.sap.grc.ctrl.test.Controls",
+          "foreignKeys": {
+            "ID": {
+              "path": "ID",
+              "indexNo": 1
+            }
+          }
+        },
+        "ownerName": {
+          "indexNo": 3,
+          "type": "cds.String"
+        },
+        "ownerEmail": {
+          "indexNo": 4,
+          "type": "cds.String"
+        }
+      }
+    },
+    "com.sap.grc.ctrl.test.ControlGroup": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "indexNo": 1,
+          "type": "cds.Integer"
+        },
+        "groupName": {
+          "indexNo": 2,
+          "type": "cds.String"
+        }
+      }
+    }
+  },
+  "version": {
+    "creator": "CDS Compiler v1.1.3",
+    "csn": "0.1.0"
+  },
+  "namespace": "com.sap.grc.ctrl.test"
+}
