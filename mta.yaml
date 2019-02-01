@@ -9,7 +9,7 @@ modules:
       memory: 256M
       disk-quota: 256M
     requires:
-      - name: Control-hdi-container
+      - name: control-local-dev-hdi
   - name: Control-srv
     type: java
     path: srv
@@ -24,7 +24,7 @@ modules:
         properties:
           url: '${default-url}'
     requires:
-      - name: Control-hdi-container
+      - name: control-local-dev-hdi
         properties:
           #JBP_CONFIG_RESOURCE_CONFIGURATION: >-
           #  [tomcat/webapps/ROOT/WEB-INF/resources.xml:
